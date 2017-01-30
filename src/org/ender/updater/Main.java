@@ -77,7 +77,8 @@ public class Main extends JFrame implements IUpdaterListener{
 	log("Starting client...");
 	String libs = String.format("-Djava.library.path=%%PATH%%%s.", File.pathSeparator);
 	UpdaterConfig cfg = updater.cfg;
-	ProcessBuilder pb = new ProcessBuilder("java", "-Xmx"+cfg.mem, libs, "-jar", cfg.jar, "-U", cfg.res, cfg.server);
+        String javaBinary = System.getProperty("java.home")+"/bin/java.exe";
+	ProcessBuilder pb = new ProcessBuilder(javaBinary, "-Xmx"+cfg.mem, libs, "-jar", cfg.jar, "-U", cfg.res, cfg.server);
 	pb.directory(UpdaterConfig.dir);
 	try {
 	    pb.start();
