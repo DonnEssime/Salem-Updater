@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -77,7 +78,11 @@ public class Main extends JFrame implements IUpdaterListener{
 	log("Starting client...");
 	String libs = String.format("-Djava.library.path=%%PATH%%%s.", File.pathSeparator);
 	UpdaterConfig cfg = updater.cfg;
-        String javaBinary = System.getProperty("java.home")+"/bin/java.exe";
+        String javaBinary = "java";
+        if(System.getProperty("os.name").contains("Windows")){
+            javaBinary += ".exe";
+        }
+        System.out.println(javaBinary);
 	ProcessBuilder pb = new ProcessBuilder(javaBinary, "-Xmx"+cfg.mem, libs, "-jar", cfg.jar, "-U", cfg.res, cfg.server);
 	pb.directory(UpdaterConfig.dir);
 	try {
